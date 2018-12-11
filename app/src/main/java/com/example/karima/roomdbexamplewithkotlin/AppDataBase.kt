@@ -17,6 +17,7 @@ import android.content.Context
 
 @Database(version = 1, entities = [
 //list DB entities
+Entity::class
 ])
 abstract class AppDataBase : RoomDatabase() {
     //create method for get a new instance of class
