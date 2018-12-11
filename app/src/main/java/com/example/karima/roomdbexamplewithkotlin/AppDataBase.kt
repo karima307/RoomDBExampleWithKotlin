@@ -20,6 +20,7 @@ import android.content.Context
 Entity::class
 ])
 abstract class AppDataBase : RoomDatabase() {
+    abstract fun entityDao():EntityDataAccessObject
     //create method for get a new instance of class
     //@volatile -> meaning that make that obj visible to other threads
     //synchronized to protect the obj from concurrent by multiple threads
