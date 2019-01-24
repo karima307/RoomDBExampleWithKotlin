@@ -14,6 +14,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var database: AppDataBase
     private lateinit var dao: EntityDataAccessObject
     private val entityList = ArrayList<Entity>()
+    private val entityListFromDb = ArrayList<Entity>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +22,7 @@ class MainActivity : AppCompatActivity() {
         database = AppDataBase.getInstance(context = this)
         dao = database.entityDao()
         submit_button.setOnClickListener { addEntity() }
+        select_all.setOnClickListener { getData() }
 
     }
 
@@ -43,5 +45,15 @@ class MainActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
         recyclerView.adapter = EntityListTitleAdapter(entityList)
     }
-
+    private fun getData() {
+        thread {
+            val task=dao.getAll()
+        runOnUiThread {
+            task.forEach {
+                entityList.add(it)
+                initRecyclerUi(entityListFromDb)
+            }
+        }
+        }
+    }
 }
