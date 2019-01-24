@@ -2,8 +2,9 @@ package com.example.karima.roomdbexamplewithkotlin
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.view.View
+import android.widget.LinearLayout
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.ArrayList
@@ -19,11 +20,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         database = AppDataBase.getInstance(context = this)
         dao = database.entityDao()
-        addEntity()
-        submit_button.setOnClickListener({
-            addEntity()
-            getData()
-        })
+        submit_button.setOnClickListener { addEntity() }
+
     }
 
     private fun addEntity() {
@@ -33,18 +31,17 @@ class MainActivity : AppCompatActivity() {
             return
         }
         val entity = Entity(title = title)
+        entityList.add(Entity(title=title))
+        initRecyclerUi(entityList)
         thread {
             dao.insert(entity)
         }
     }
 
-    private fun getData() {
-        val task = dao.getAll()
-        runOnUiThread {
-            task.forEach {
-                entityList.add(Entity())
-                recycler_view.adapter = EntityListTitleAdapter(entityList)
-            }
-        }
+    private fun initRecyclerUi(entityList: ArrayList<Entity>) {
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this, LinearLayout.VERTICAL, false)
+        recyclerView.adapter = EntityListTitleAdapter(entityList)
     }
+
 }

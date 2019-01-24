@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">RoomDBExampleWithKotlin</string>
+    <string name="select">select</string>
+    <string name="submit">Submit</string>
 </resources>
