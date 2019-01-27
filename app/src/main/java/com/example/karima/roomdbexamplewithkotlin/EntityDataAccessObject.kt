@@ -1,5 +1,6 @@
 package com.example.karima.roomdbexamplewithkotlin
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.Dao
 import android.arch.persistence.room.Insert
 import android.arch.persistence.room.Query
@@ -14,6 +15,6 @@ interface EntityDataAccessObject{
     @Insert
     fun insertAll(listOfEntity: List<Entity>):List<Long>
     @Query("SELECT * FROM Employee")
-    fun getAll():List<Entity>
+    fun getAll():LiveData<List<Entity>>
 
 }
